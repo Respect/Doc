@@ -25,5 +25,4 @@ Returns the documentation in markdown
     $generator = new Doc($class);
     $markdown  = (string) $generator;
     $doc       = file_put_contents('../README.md', $markdown); //Happy Panda
-    print $markdown;
     $this->assertStringEqualsFile('../README.md', $markdown);
