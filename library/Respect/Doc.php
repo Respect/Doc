@@ -20,20 +20,20 @@ use \ReflectionProperty;
  */
 class Doc
 {
-    protected $ns;
+    public $path;
     protected $reflections=array();
     protected $sections=array();
 
     /** Receives the namespace or class to be documented */
     public function __construct($classOrNamespace)
     {
-        $this->ns = $classOrNamespace;
+        $this->path = $classOrNamespace;
     }
 
     /** Returns the documentation in markdown */
     public function __toString()
     {
-        return $this->getMarkdown($this->getContents($this->ns));
+        return $this->getMarkdown($this->getContents($this->path));
         
     }
 
@@ -48,7 +48,9 @@ class Doc
     protected function getNamespaceContents($path)
     {
         $sections = array();
-        foreach (get_declared_classes() as $class)
+        $declaredClasses = get_declared_classes();
+        natsort($declaredClasses);
+        foreach ($declaredClasses as $class)
             if (0 === stripos($class, $path) && false === strripos($class, 'Test'))
                 $sections += $this->getClassContents($class);
 
@@ -102,13 +104,14 @@ class Doc
                     
                 $sections[$name] = $sub->getDocComment();
                 // Fetch method content for examples
-                foreach ($tests as $test) {
+                foreach ($tests as $n => $test) {
                     $testCaseContents = file($test->getFilename());
+                    $testSectionName  = "Example ".($n+1).":";
                     $testCaseLines    = array_slice($testCaseContents, 1+$test->getStartLine(), -2+$test->getEndLine()-$test->getStartLine());
                     $testCaseLines    = array_map(function($line) {
                                             return '    '.ltrim($line);
                                         }, $testCaseLines);
-                    $sections[$name] .= PHP_EOL.PHP_EOL.implode($testCaseLines);
+                    $sections[$name] .= PHP_EOL.PHP_EOL.$testSectionName.PHP_EOL.PHP_EOL.implode($testCaseLines);
                 }
 
             }
@@ -142,9 +145,9 @@ class Doc
         usort($staticMethods, $nameSort);
         usort($staticProperties, $nameSort);
         foreach (array_merge($staticProperties, $properties, $staticMethods, $methods) as $method)
-            $sections[$method] = array_filter($testCaseMethods, function($test) use($method) {
-                                    return $test->getName() == 'test_as_example_for_'.$method->getName().'_method';
-                                 });
+            $sections[$method] = array_values(array_filter($testCaseMethods, function($test) use($method) {
+                                    return 0 === stripos($test->getName(), 'test_as_example_for_'.$method->getName().'_method');
+                                 }));
         return $sections;
     }
 
