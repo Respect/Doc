@@ -145,6 +145,7 @@ class Generator
 				$matches = 1;
 
 			$content  = trim(preg_replace('#^(\s*[*]|[/][*]{2}|[\][*])[/*]*(.*?)[ /*]*$#m', '$2', $content));
+			$content  = preg_replace('#^[@](\w+)\s+(.*)#', '  - **$1**: $2 ', $content);
 			$string[] = trim(str_repeat('#', count($matches)).' '.$name."\n\n".$content);
 		}
 		return implode("\n\n", $string);

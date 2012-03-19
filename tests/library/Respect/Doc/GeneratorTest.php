@@ -9,7 +9,8 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
 		$class     = 'Respect\Doc\Generator';
 		$generator = new Generator($class);
 		$markdown  = (string) $generator;
-		$doc       = file_put_contents('../README.md', $markdown); //ha
+		$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
+		print $markdown;
 		$this->assertStringEqualsFile('../README.md', $markdown);
 	}
 }
