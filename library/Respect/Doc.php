@@ -1,5 +1,5 @@
 <?php
-namespace Respect\Doc;
+namespace Respect;
 
 use \SplObjectStorage;
 use \ReflectionClass;
@@ -18,7 +18,7 @@ use \ReflectionProperty;
  * @author  Alexandre Gaigalas <alexandre@gaigalas.net>
  * @author  Augusto Pascutti <augusto@phpsp.org.br>
  */
-class Generator
+class Doc
 {
 	protected $ns;
 	protected $reflections=array();
@@ -145,7 +145,13 @@ class Generator
 				$matches = 1;
 
 			$content  = trim(preg_replace('#^(\s*[*]|[/][*]{2}|[\][*])[/*]*(.*?)[ /*]*$#m', '$2', $content));
-			$content  = preg_replace('#^[@](\w+)\s+(.*)#', '  - **$1**: $2 ', $content);
+			$content  = preg_replace("#\\n\\n[ ]*@#", "\n\nMore Info:\n\n@", $content);
+			$content  = preg_replace_callback('#^[ ]*[@](\w+)[ ]+(.*)#mi', 
+				function($matches){
+					$matches[1] = ucfirst($matches[1]);
+					return "   - **{$matches[1]}:** {$matches[2]} ";
+			    }, 
+		    $content);
 			$string[] = trim(str_repeat('#', count($matches)).' '.$name."\n\n".$content);
 		}
 		return implode("\n\n", $string);

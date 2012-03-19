@@ -1,13 +1,12 @@
 <?php
-namespace Respect\Doc;
-use Respect\Doc\Reflection;
+namespace Respect;
 
-class GeneratorTest extends \PHPUnit_Framework_TestCase
+class DocTest extends \PHPUnit_Framework_TestCase
 {
 	public function test_as_example_for___toString_method()
 	{
-		$class     = 'Respect\Doc\Generator';
-		$generator = new Generator($class);
+		$class     = 'Respect\Doc';
+		$generator = new Doc($class);
 		$markdown  = (string) $generator;
 		$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
 		print $markdown;
