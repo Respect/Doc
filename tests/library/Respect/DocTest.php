@@ -9,7 +9,6 @@ class DocTest extends \PHPUnit_Framework_TestCase
 		$generator = new Doc($class);
 		$markdown  = (string) $generator;
 		$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
-		print $markdown;
 		$this->assertStringEqualsFile('../README.md', $markdown);
 	}
 }
