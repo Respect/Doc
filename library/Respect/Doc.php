@@ -108,9 +108,17 @@ class Doc
                     $testCaseContents = file($test->getFilename());
                     $testSectionName  = "Example ".($n+1).":";
                     $testCaseLines    = array_slice($testCaseContents, 1+$test->getStartLine(), -2+$test->getEndLine()-$test->getStartLine());
-                    $testCaseLines    = array_map(function($line) {
-                                            return '    '.ltrim($line);
-                                        }, $testCaseLines);
+                    $testCaseLines    = array_map(
+                        function($line) {
+                            if ($line{0} == "\t")
+                                return substr($line, 1);
+                            if ($line{0} == ' ')
+                                return substr($line, 4);
+                            else
+                                return '    ' . $line;
+                        },
+                        $testCaseLines
+                    );
                     $sections[$name] .= PHP_EOL.PHP_EOL.$testSectionName.PHP_EOL.PHP_EOL.implode($testCaseLines);
                 }
 
@@ -169,7 +177,8 @@ class Doc
                     return "   - **{$matches[1]}:** {$matches[2]} ";
                 }, 
             $content);
-            $string[] = trim(str_repeat('#', count($matches)).' '.$name."\n\n".$content);
+            $char   = count($matches) == 1 ? '=' : '-';
+            $string[] = trim($name . "\n" .  str_repeat($char, strlen($name)) . "\n\n" . $content);
         }
         return implode("\n\n", $string);
     }

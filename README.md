@@ -1,4 +1,5 @@
-# Respect\Doc
+Respect\Doc
+===========
 
 Generates docs that rocks your socks off.
 
@@ -13,31 +14,38 @@ More Info:
    - **Author:** Alexandre Gaigalas <alexandre@gaigalas.net> 
    - **Author:** Augusto Pascutti <augusto@phpsp.org.br>
 
-## path
+path
+----
 
-## __construct($classOrNamespace)
+__construct($classOrNamespace)
+------------------------------
 
 Receives the namespace or class to be documented
 
 Example 1:
 
-    $doc = new Doc('Respect'); //Full Namespace
-    $this->assertStringStartsWith('# Respect', (string) $doc);
+    $doc    = new Doc('Respect'); //Full Namespace
+    $title  = 'Respect\Doc' . PHP_EOL 
+            . '===========';
+    $this->assertStringStartsWith($title, (string) $doc);
 
 
 Example 2:
 
-    $doc = new Doc('Respect\Doc'); //Specific class Name
-    $this->assertStringStartsWith('# Respect\Doc', (string) $doc);
+    $doc    = new Doc('Respect\Doc'); //Specific |class Name
+    $title  = 'Respect\Doc' . PHP_EOL 
+            . '===========';
+    $this->assertStringStartsWith($title, (string) $doc);
 
-## __toString()
+__toString()
+------------
 
 Returns the documentation in markdown
 
 Example 1:
 
-    $class     = 'Respect\Doc';
-    $doc       = new Doc($class);
-    $markdown  = (string) $doc;
-    $doc       = file_put_contents('../README.md', $markdown); //Happy Panda
-    $this->assertStringEqualsFile('../README.md', $markdown);
+	$class     = 'Respect\Doc';
+	$doc       = new Doc($class);
+	$markdown  = (string) $doc;
+	$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
+	$this->assertStringEqualsFile('../README.md', $markdown);
