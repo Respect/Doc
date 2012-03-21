@@ -13,12 +13,16 @@ class DocTest extends \PHPUnit_Framework_TestCase
 	}
     public function test_as_example_for___construct_method_with_namespace()
     {
-        $doc = new Doc('Respect'); //Full Namespace
-        $this->assertStringStartsWith('# Respect', (string) $doc);
+        $doc    = new Doc('Respect'); //Full Namespace
+        $title  = 'Respect\Doc' . PHP_EOL 
+                . '===========';
+        $this->assertStringStartsWith($title, (string) $doc);
     }
     public function test_as_example_for___construct_method_with_class()
     {
-        $doc = new Doc('Respect\Doc'); //Specific class Name
-        $this->assertStringStartsWith('# Respect\Doc', (string) $doc);
+        $doc    = new Doc('Respect\Doc'); //Specific |class Name
+        $title  = 'Respect\Doc' . PHP_EOL 
+                . '===========';
+        $this->assertStringStartsWith($title, (string) $doc);
     }
 }
