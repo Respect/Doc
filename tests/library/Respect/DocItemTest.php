@@ -45,8 +45,7 @@ class DocItemTest extends \PHPUnit_Framework_TestCase
     }
     public function test_getSections()
     {
-        $docItem = New DocItem( 'Respect\DocItem');
-             var_dump($docItem->getSections());
+            $this->AssertInstanceOf('SplObjectStorage',$this->docItem->getSections());
     }
     
 }
