@@ -71,7 +71,7 @@ class Doc
             $class            = $docItem->getName();
             $sections[$class] = $docItem->getDocComment();
 
-            $reflectors = $this->getSections($reflection);
+            $reflectors = $this->getSections($docItem);
             foreach ($reflectors as $sub) {
 
                 $tests = $reflectors[$sub];
@@ -129,7 +129,7 @@ class Doc
         return $sections;
     }
 
-    protected function getSections(ReflectionClass $reflection) 
+    protected function getSections(DocItem $reflection) 
     {
         $testCaseClass = $reflection->getName().'Test';
 
