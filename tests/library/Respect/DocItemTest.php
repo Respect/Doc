@@ -24,10 +24,10 @@ class DocItemTest extends \PHPUnit_Framework_TestCase
  * @author Ivo Nascimento <ivo.nascimento@php.net> 
  */";
         $this->AssertEquals($returnValue, $this->docItem->getDocComment());
-    }
+}
 
     public function getMethodsDataprovider()
-    {
+{    
         return array(
                 array(0,'__construct'),
                 array(1,'getName'),
@@ -43,4 +43,10 @@ class DocItemTest extends \PHPUnit_Framework_TestCase
         $methods = $this->docItem->getMethods();
         $this->AssertEquals($methods[$idx]->name, $name );
     }
+    public function test_getSections()
+    {
+        $docItem = New DocItem( 'Respect\DocItem');
+             var_dump($docItem->getSections());
+    }
+    
 }
