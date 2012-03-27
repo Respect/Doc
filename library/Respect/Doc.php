@@ -16,7 +16,7 @@ namespace Respect;
  */
 class Doc
 {
-    public $path;
+    private $path;
     /** Receives the namespace or class to be documented */
     public function __construct($classOrNamespace)
     {
