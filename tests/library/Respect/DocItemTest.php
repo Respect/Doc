@@ -1,5 +1,5 @@
 <?php
-namespace respect;                               
+namespace Respect;                               
                                                  
 class DocItemTest extends \phpunit_framework_testcase
 {
