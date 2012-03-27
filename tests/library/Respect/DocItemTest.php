@@ -25,4 +25,22 @@ class DocItemTest extends \PHPUnit_Framework_TestCase
  */";
         $this->AssertEquals($returnValue, $this->docItem->getDocComment());
     }
+
+    public function getMethodsDataprovider()
+    {
+        return array(
+                array(0,'__construct'),
+                array(1,'getName'),
+                array(2,'getDocComment'),
+                array(3,'__call')
+        );
+    }
+    /**
+     * @dataProvider getMethodsDataprovider  
+     */
+    public function test_getMethods($idx, $name)
+    {
+        $methods = $this->docItem->getMethods();
+        $this->AssertEquals($methods[$idx]->name, $name );
+    }
 }
