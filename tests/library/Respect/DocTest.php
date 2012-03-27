@@ -25,4 +25,12 @@ class DocTest extends \PHPUnit_Framework_TestCase
                 . '===========';
         $this->assertStringStartsWith($title, (string) $doc);
     }
+    public function test_getMarkDownforNamespace()
+    {
+        $doc    = new Doc('Respect'); //Specific |class Name
+        $content =  (string)$doc;
+        $this->assertGreaterThanOrEqual( 100, strpos($content,'Respect\MarkDown'));
+        $this->assertGreaterThanOrEqual( 50, strpos($content,'Respect\DocItem'));
+        $this->assertEquals( 0, strpos($content,'Respect\Doc'));
+    }
 }
