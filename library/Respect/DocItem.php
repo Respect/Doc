@@ -79,6 +79,8 @@ class DocItem
     public function getClassContent()
     {
         $sections = array();
+        $class            = $this->getName();
+        $sections[$class] = $this->getDocComment();
         $reflectors = $this->getSections();
         foreach ($reflectors as $sub) {
             $tests = $reflectors[$sub];
