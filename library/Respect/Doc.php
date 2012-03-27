@@ -71,7 +71,7 @@ class Doc
             $class            = $docItem->getName();
             $sections[$class] = $docItem->getDocComment();
 
-            $reflectors = $this->getSections($docItem);
+            $reflectors = $docItem->getSections();
             foreach ($reflectors as $sub) {
 
                 $tests = $reflectors[$sub];
@@ -126,37 +126,6 @@ class Doc
             }
                 
         }
-        return $sections;
-    }
-
-    protected function getSections(DocItem $reflection) 
-    {
-        $testCaseClass = $reflection->getName().'Test';
-
-        if (class_exists($testCaseClass)) {
-            $testCaseReflection = new ReflectionClass($testCaseClass);
-            $testCaseMethods = $testCaseReflection->getMethods();
-        } else {
-            $testCaseMethods= array();
-        }
-        $sections = new SplObjectStorage;
-        $methods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC ^ ReflectionMethod::IS_STATIC);
-        $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC ^ ReflectionProperty::IS_STATIC);
-        $staticMethods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC & ReflectionMethod::IS_STATIC);
-        $staticProperties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC & ReflectionProperty::IS_STATIC);
-
-        $nameSort = function($a, $b) {
-            return strnatcasecmp($a->getName(), $b->getName());
-        };
-
-        usort($methods, $nameSort);
-        usort($properties, $nameSort);
-        usort($staticMethods, $nameSort);
-        usort($staticProperties, $nameSort);
-        foreach (array_merge($staticProperties, $properties, $staticMethods, $methods) as $method)
-            $sections[$method] = array_values(array_filter($testCaseMethods, function($test) use($method) {
-                                    return 0 === stripos($test->getName(), 'test_as_example_for_'.$method->getName().'_method');
-                                 }));
         return $sections;
     }
 
