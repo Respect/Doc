@@ -76,7 +76,61 @@ class DocItem
                                  }));
         return $sections;
     }
+    public function getClassContent()
+    {
+        $sections = array();
+        $reflectors = $this->getSections();
+        foreach ($reflectors as $sub) {
+            $tests = $reflectors[$sub];
+            if ($sub->isStatic())
+                $subName = 'static ';
+            else
+                $subName = '';
 
+            $subName .= $sub->getName();
+            $name     = $class.'::'.$subName;
 
+            if ($sub instanceof ReflectionMethod)
+                if ($sub->getNumberOfRequiredParameters() <= 0)
+                    $name .= '()';
+                else {
+                    $params = $sub->getParameters();
+                    $tmp    = array();
+                    foreach ($params as $param) {
+                        if ($param->isArray())
+                            $tmp[] = 'array ';
+                        if ($param->isOptional())
+                            $tmp[] = '$'.$param->getName().'=null';
+                        elseif ($param->isDefaultValueAvailable())
+                            $tmp[] = '$'.$param->getName().'='.$param->getDefaultValue();
+                        else
+                            $tmp[] = '$'.$param->getName();
+                    }
+                    $name .= '('.implode(', ', $tmp).')';
+                }
+                    
+                $sections[$name] = $sub->getDocComment();
+                // Fetch method content for examples
+                foreach ($tests as $n => $test) {
+                    $testCaseContents = file($test->getFilename());
+                    $testSectionName  = "Example ".($n+1).":";
+                    $testCaseLines    = array_slice($testCaseContents, 1+$test->getStartLine(), -2+$test->getEndLine()-$test->getStartLine());
+                    $testCaseLines    = array_map(
+                        function($line) {
+                            if ($line{0} == "\t")
+                                return substr($line, 1);
+                            if ($line{0} == ' ')
+                                return substr($line, 4);
+                            else
+                                return '    ' . $line;
+                        },
+                        $testCaseLines
+                    );
+                    $sections[$name] .= PHP_EOL.PHP_EOL.$testSectionName.PHP_EOL.PHP_EOL.implode($testCaseLines);
+                }
+
+            }
+               return $sections; 
+        }
 }
 
