@@ -32,6 +32,8 @@ class DocItem
     {
         return $this->refItem->getName();
     }
-
+    public function getDocComment()
+    {
+    }
 }
 
