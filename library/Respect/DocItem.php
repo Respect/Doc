@@ -28,11 +28,11 @@ class DocItem
        $this->docItem =  $item;
        $this->refItem = new ReflectionClass($item);
     }
-    public function getName()
+    private function getName()
     {
         return $this->refItem->getName();
     }
-    public function getDocComment()
+    private function getDocComment()
     {
         return $this->refItem->getDocComment();
     }
@@ -40,7 +40,7 @@ class DocItem
     {
         return call_user_func_array(array($this->refItem, $method),$parameters );
     }
-    public function getMethods($scope=null)
+    private function getMethods($scope=null)
     {
         if (is_null($scope))
             return $this->refItem->getMethods();
