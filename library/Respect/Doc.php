@@ -29,7 +29,10 @@ class Doc
     /** Returns the documentation in markdown */
     public function __toString()
     {
-        return $this->getMarkdown($this->getContents($this->path));
+        $content = $this->getContents($this->path);
+        $markdown = new MarkDown();
+        return $markdown->get($content);
+//        return $this->getMarkdown($this->getContents($this->path));
         
     }
 
