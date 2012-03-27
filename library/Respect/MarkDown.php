@@ -1,6 +1,11 @@
 <?php
 namespace Respect;
 
+/**
+ * speak Markdownish 
+ * 
+ * @author Ivo Nascimento <ivonascimento@php.net> 
+ */
 class MarkDown
 {
     public function get(array $sections)
