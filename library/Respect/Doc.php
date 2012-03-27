@@ -53,7 +53,6 @@ class Doc
         return $sections;
     }
 
-    //TODO: extract a lot of methods
     protected function getClassContents($path)
     {
         if (!class_exists($path))
@@ -64,9 +63,8 @@ class Doc
         foreach ($classes as $class) {
             $docItem          = new DocItem($class);
             $class            = $docItem->getName();
-            $sections[$class] = $docItem->getDocComment();
-            $sections = array_merge($sections, $docItem->getClassContent());
-            }
+            $sections = $docItem->getClassContent();
+        }
         return $sections;
     }
 
