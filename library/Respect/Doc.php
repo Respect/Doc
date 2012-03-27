@@ -66,9 +66,10 @@ class Doc
         $sections = array();
         $classes  = array($path);
         foreach ($classes as $class) {
+            $docItem          = new DocItem($class);
             $reflection       = new ReflectionClass($class);
-            $class            = $reflection->getName();
-            $sections[$class] = $reflection->getDocComment();
+            $class            = $docItem->getName();
+            $sections[$class] = $docItem->getDocComment();
 
             $reflectors = $this->getSections($reflection);
             foreach ($reflectors as $sub) {
