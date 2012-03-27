@@ -36,9 +36,9 @@ class DocItem
     {
         return $this->refItem->getDocComment();
     }
-    public function __call($method, $paramters)
+    public function __call($method, $parameters)
     {
-        return $this->refItem->$method();
+        return call_user_func_array(array($this->refItem, $method),$parameters );
     }
 }
 
