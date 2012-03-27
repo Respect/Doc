@@ -1,7 +1,7 @@
 <?php
-namespace Respect;                               
+namespace respect;                               
                                                  
-class DocItemTest extends \PHPUnit_Framework_TestCase
+class DocItemTest extends \phpunit_framework_testcase
 {
     private $docItem;
     public function setUp()
