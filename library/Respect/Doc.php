@@ -1,10 +1,6 @@
 <?php
 namespace Respect;
 
-use \SplObjectStorage;
-use \ReflectionClass;
-use \ReflectionMethod;
-use \ReflectionProperty;
 
 /**
  * Generates docs that rocks your socks off.
@@ -67,7 +63,6 @@ class Doc
         $classes  = array($path);
         foreach ($classes as $class) {
             $docItem          = new DocItem($class);
-            $reflection       = new ReflectionClass($class);
             $class            = $docItem->getName();
             $sections[$class] = $docItem->getDocComment();
 
