@@ -18,6 +18,11 @@ class DocItemTest extends \PHPUnit_Framework_TestCase
     }
     public function test_getDocComment()
     {
-        $this->AssertEquals('---', $this->docItem->getDocComment());
+        $returnValue = "/**
+ * DocItem Reflection Class to speak where is the socks to rock it.  
+ * 
+ * @author Ivo Nascimento <ivo.nascimento@php.net> 
+ */";
+        $this->AssertEquals($returnValue, $this->docItem->getDocComment());
     }
 }
