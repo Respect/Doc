@@ -1,5 +1,5 @@
-Respect\Doc
-===========
+Respect\Doc\Doc
+===============
 
 Generates docs that rocks your socks off.
 
@@ -14,9 +14,6 @@ More Info:
    - **Author:** Alexandre Gaigalas <alexandre@gaigalas.net> 
    - **Author:** Augusto Pascutti <augusto@phpsp.org.br>
 
-path
-----
-
 __construct($classOrNamespace)
 ------------------------------
 
@@ -25,7 +22,7 @@ Receives the namespace or class to be documented
 Example 1:
 
     $doc    = new Doc('Respect'); //Full Namespace
-    $title  = 'Respect\Doc' . PHP_EOL 
+    $title  = 'Respect\Doc\Doc' . PHP_EOL 
             . '===========';
     $this->assertStringStartsWith($title, (string) $doc);
 
@@ -33,7 +30,7 @@ Example 1:
 Example 2:
 
     $doc    = new Doc('Respect\Doc'); //Specific |class Name
-    $title  = 'Respect\Doc' . PHP_EOL 
+    $title  = 'Respect\Doc\Doc' . PHP_EOL 
             . '===========';
     $this->assertStringStartsWith($title, (string) $doc);
 
