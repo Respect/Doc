@@ -21,14 +21,9 @@ class NameSpaceAnalizer
         $file   = str_replace('\\','/',$className).".php";
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $path) {
             if (file_exists($path = $path . DIRECTORY_SEPARATOR . $file)) {
-                return new \RecursiveDirectoryIterator(dirname($path));
+                return new \DirectoryIterator(dirname($path));
             }
         }
         throw new \Exception("Have no include_path to {$class}");
     }
-    private function getClasses(\RecursiveDirectoryIterator $directory)
-    {
-        
-    }
-    
 }
