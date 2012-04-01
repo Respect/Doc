@@ -14,8 +14,8 @@ More Info:
    - **Author:** Alexandre Gaigalas <alexandre@gaigalas.net> 
    - **Author:** Augusto Pascutti <augusto@phpsp.org.br>
 
-__construct($classOrNamespace)
-------------------------------
+__construct($classOrNamespace, $documentAs=null)
+------------------------------------------------
 
 Receives the namespace or class to be documented
 
