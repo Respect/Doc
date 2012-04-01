@@ -30,9 +30,23 @@ class Doc
     /** Returns the documentation in markdown */
     public function __toString()
     {
-        $content = $this->getContents($this->path);
         $markdown = new MarkDown();
-        return $markdown->get($content);
+        $contents = "";
+        if ($this->mode == Doc::DOCCLASS){
+            $content = $this->getContents($this->path);
+            $contents = $markdown->get($content);
+        } else {
+            $nameSpaceAnalizer  = new NameSpaceAnalizer();
+            $itens              = $nameSpaceAnalizer->get($this->path);
+            while ($itens->valid()) {
+                if (!$itens->isDir()) {
+                    $classpath = str_replace('.php','',"\\".$this->path."\\".$itens->getFilename());
+                    $contents.= $markdown->get( $this->getContents($classpath)).PHP_EOL.PHP_EOL;
+                }
+                $itens->next();
+            }
+        }
+        return $contents;
     }
 
     protected function getContents($path)
