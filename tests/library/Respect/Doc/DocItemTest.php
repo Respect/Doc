@@ -49,6 +49,7 @@ class DocItemTest extends \phpunit_framework_testcase
     }
     public function test_getClassContents()
     {
+        $reference = __DIR__."/../../../output/RespectDoc_output.txt";
         $doc = new Doc('\Respect\Doc\Doc');
         $content = \file_get_contents (__DIR__."/../../../output/RespectDoc_output.txt");
         $this->AssertEquals($content, (string)$doc);
