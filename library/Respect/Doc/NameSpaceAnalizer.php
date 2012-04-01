@@ -12,21 +12,20 @@ class NameSpaceAnalizer
  * @return void
  * @author Ivo Nascimento
  **/
-    public function get($class) {
-        //if (is_object($class)) {
-            $directory = $this->toDirectory(get_class($class).".php");
-        //}
-        
-        return $directory;
+    public function get($target) {
+        if (is_object($target)) {
+            return $this->toDirectory(get_class($target).".php");
+        }
+        return $this->toDirectory($target);
     }
-    private function toDirectory($className)
+    private function toDirectory($target)
     {
-        $file   = str_replace('\\','/',$className);
+        $file   = str_replace('\\','/',$target);
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $path) {
             if (file_exists($path = $path . DIRECTORY_SEPARATOR . $file)) {
                 return new \DirectoryIterator(dirname($path));
             }
         }
-        throw new Exception("Have no include_path to {$className}");
+        throw new Exception("Have no include_path to {$target}");
     }
 }
