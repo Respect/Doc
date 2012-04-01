@@ -17,9 +17,13 @@ namespace Respect\Doc;
 class Doc
 {
     private $path;
+    private $mode
+    const DOCNS     = 0;
+    const DOCCLASS  = 1;
     /** Receives the namespace or class to be documented */
-    public function __construct($classOrNamespace)
+    public function __construct($classOrNamespace, $documentAs = \Self::DOCCLASS)
     {
+        $this->mode = $documentAs;
         $this->path = $classOrNamespace;
     }
 
