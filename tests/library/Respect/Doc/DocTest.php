@@ -33,4 +33,12 @@ class DocTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThanOrEqual( 50, strpos($content,'Respect\Doc\DocItem'));
         $this->assertEquals( 0, strpos($content,'Respect\Doc\Doc'));
     }
+    
+    public function testgetMarkDownFromNameSpace()
+    {    
+        $reference = __DIR__."/../../../output/namespace_output.txt";
+        $doc    = new Doc('Respect\Doc', Doc::DOCNS);
+        $content =  file_get_contents($reference);
+        $this->AssertEquals($content, (string)$doc);
+    }
 }
