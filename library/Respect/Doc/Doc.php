@@ -17,7 +17,7 @@ namespace Respect\Doc;
 class Doc
 {
     private $path;
-    private $mode
+    private $mode;
     const DOCNS     = 0;
     const DOCCLASS  = 1;
     /** Receives the namespace or class to be documented */
