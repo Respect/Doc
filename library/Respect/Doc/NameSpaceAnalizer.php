@@ -14,7 +14,7 @@ class NameSpaceAnalizer
  **/
     public function get($class) {
         $directory = $this->toDirectory(get_class($class));
-        return $this->toDirectory(get_class($class));
+        return $directory;
     }
     private function toDirectory($className)
     {
@@ -24,6 +24,6 @@ class NameSpaceAnalizer
                 return new \DirectoryIterator(dirname($path));
             }
         }
-        throw new \Exception("Have no include_path to {$class}");
+        throw new Exception("Have no include_path to {$className}");
     }
 }
