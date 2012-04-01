@@ -34,4 +34,18 @@ class NameSpaceAnalizerTest extends \phpunit_framework_testcase
         $class = new \stdclass;
         $allFilesInNameSpace   = $this->ns->get($class);
     }
+    
+    public function testgetFromStringNameSpace()
+    {
+        $namespace = 'Respect\Doc';
+        $allFilesInNameSpace   = $this->ns->get($namespace);
+        $this->AssertInstanceOf('DirectoryIterator', $allFilesInNameSpace);
+        $files = 0;
+        while($allFilesInNameSpace->valid()) {
+            $files += (!$allFilesInNameSpace->isDir())?1:0;
+            $allFilesInNameSpace->next();
+        }
+        $this->AssertEquals(5, $files);
+        
+    }
 }
