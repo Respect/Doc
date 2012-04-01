@@ -22,6 +22,16 @@ class NameSpaceAnalizerTest extends \phpunit_framework_testcase
             $files += (!$allFilesInNameSpace->isDir())?1:0;
             $allFilesInNameSpace->next();
         }
-        $this->AssertEquals(4, $files);
+        $this->AssertEquals(5, $files);
+    }
+    
+    /**
+     * @expectedException Respect\Doc\Exception
+     * @expectedExceptionMessage Have no include_path to stdClass
+     */
+     public function testgetfromAClassWithoutNameSpace()
+    {
+        $class = new \stdclass;
+        $allFilesInNameSpace   = $this->ns->get($class);
     }
 }
