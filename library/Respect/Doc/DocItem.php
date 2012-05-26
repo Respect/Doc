@@ -1,5 +1,5 @@
 <?php
-namespace Respect;
+namespace Respect\Doc;
 
 use \SplObjectStorage;
 use \ReflectionClass;

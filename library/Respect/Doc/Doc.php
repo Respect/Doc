@@ -1,5 +1,5 @@
 <?php
-namespace Respect;
+namespace Respect\Doc;
 
 
 /**
@@ -17,18 +17,36 @@ namespace Respect;
 class Doc
 {
     private $path;
+    private $mode;
+    const DOCNS     = 0;
+    const DOCCLASS  = 1;
     /** Receives the namespace or class to be documented */
-    public function __construct($classOrNamespace)
+    public function __construct($classOrNamespace, $documentAs = \Self::DOCCLASS)
     {
+        $this->mode = $documentAs;
         $this->path = $classOrNamespace;
     }
 
     /** Returns the documentation in markdown */
     public function __toString()
     {
-        $content = $this->getContents($this->path);
         $markdown = new MarkDown();
-        return $markdown->get($content);
+        $contents = "";
+        if ($this->mode == Doc::DOCCLASS){
+            $content = $this->getContents($this->path);
+            $contents = $markdown->get($content);
+        } else {
+            $nameSpaceAnalizer  = new NameSpaceAnalizer();
+            $itens              = $nameSpaceAnalizer->get($this->path);
+            while ($itens->valid()) {
+                if (!$itens->isDir()) {
+                    $classpath = str_replace('.php','',"\\".$this->path."\\".$itens->getFilename());
+                    $contents.= $markdown->get( $this->getContents($classpath)).PHP_EOL.PHP_EOL;
+                }
+                $itens->next();
+            }
+        }
+        return $contents;
     }
 
     protected function getContents($path)

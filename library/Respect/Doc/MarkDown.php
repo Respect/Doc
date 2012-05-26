@@ -1,5 +1,5 @@
 <?php
-namespace Respect;
+namespace Respect\Doc;
 
 /**
  * speak Markdownish 

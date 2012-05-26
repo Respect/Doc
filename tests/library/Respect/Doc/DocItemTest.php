@@ -1,12 +1,12 @@
 <?php
-namespace Respect;                               
+namespace Respect\Doc;                               
                                                  
 class DocItemTest extends \phpunit_framework_testcase
 {
     private $docItem;
     public function setUp()
     {
-        $this->docItem = New DocItem( 'Respect\DocItem');
+        $this->docItem = new DocItem( 'Respect\Doc\DocItem');
     }
     public function tearDown()
     {
@@ -14,7 +14,7 @@ class DocItemTest extends \phpunit_framework_testcase
     }
     public function test_getName()
     {
-        $this->AssertEquals('Respect\DocItem', $this->docItem->getName());
+        $this->AssertEquals('Respect\Doc\DocItem', $this->docItem->getName());
     }
     public function test_getDocComment()
     {
@@ -49,8 +49,9 @@ class DocItemTest extends \phpunit_framework_testcase
     }
     public function test_getClassContents()
     {
-        $doc = new Doc('\Respect\Doc');
-        $content = \file_get_contents (__DIR__."/../../output/RespectDoc_output.txt");
+        $reference = __DIR__."/../../../output/RespectDoc_output.txt";
+        $doc = new Doc('\Respect\Doc\Doc');
+        $content = \file_get_contents (__DIR__."/../../../output/RespectDoc_output.txt");
         $this->AssertEquals($content, (string)$doc);
     }
 }

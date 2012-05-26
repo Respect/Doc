@@ -46,3 +46,87 @@ Example 1:
 	$markdown  = (string) $doc;
 	$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
 	$this->assertStringEqualsFile('../README.md', $markdown);
+
+Respect\Doc\DocItem
+===================
+
+DocItem Reflection Class to speak where is the socks to rock it.
+
+More Info:
+
+   - **Author:** Ivo Nascimento <ivo.nascimento@php.net>
+
+getClassContent()
+-----------------
+
+getSections()
+-------------
+
+__call($method, $parameters)
+----------------------------
+
+__construct($item)
+------------------
+
+__construct Construct a doc Item
+
+More Info:
+
+   - **Access:** public 
+   - **Return:** void
+
+Respect\Doc\Exception
+=====================
+
+getCode()
+---------
+
+getFile()
+---------
+
+getLine()
+---------
+
+getMessage()
+------------
+
+getPrevious()
+-------------
+
+getTrace()
+----------
+
+getTraceAsString()
+------------------
+
+__construct()
+-------------
+
+__toString()
+------------
+
+Respect\Doc\MarkDown
+====================
+
+speak Markdownish
+
+More Info:
+
+   - **Author:** Ivo Nascimento <ivonascimento@php.net>
+
+get(array , $sections)
+----------------------
+
+Respect\Doc\NameSpaceAnalizer
+=============================
+
+get($target)
+------------
+
+undocumented function
+
+More Info:
+
+   - **Return:** void 
+   - **Author:** Ivo Nascimento
+
