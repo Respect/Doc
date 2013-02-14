@@ -78,7 +78,6 @@ class Doc
         $classes  = array($path);
         foreach ($classes as $class) {
             $docItem          = new DocItem($class);
-            $class            = $docItem->getName();
             $sections = array_merge($sections,$docItem->getClassContent());
         }
         return $sections;

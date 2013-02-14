@@ -1,21 +1,18 @@
 <?php
+
 namespace Respect\Doc;
 
-use \SplObjectStorage;
-use \ReflectionClass;
-use \ReflectionMethod;
-use \ReflectionProperty;
-
+use SplObjectStorage,
+    ReflectionClass,
+    ReflectionMethod,
+    ReflectionProperty;
 
 /**
- * DocItem Reflection Class to speak where is the socks to rock it.
- *
- * @author Ivo Nascimento <ivo.nascimento@php.net>
+ * An item to be documented.
  */
 class DocItem
 {
-    private $item;
-    private $refItem;
+    private $className;
 
     /**
      * __construct Construct a doc Item
@@ -23,49 +20,40 @@ class DocItem
      * @access public
      * @return void
      */
-    public function __construct($item)
+    public function __construct($whatDoYouWantToDocument)
     {
-       $this->docItem =  $item;
-       $this->refItem = new ReflectionClass($item);
+       $this->className = $whatDoYouWantToDocument;
     }
-    private function getName()
+
+    public function getReflection($className=null)
     {
-        return $this->refItem->getName();
+        $className = $className ?: $this->className;
+        return new ReflectionClass($className);
     }
-    private function getDocComment()
-    {
-        return $this->refItem->getDocComment();
-    }
-    public function __call($method, $parameters)
-    {
-        return call_user_func_array(array($this->refItem, $method),$parameters );
-    }
-    private function getMethods($scope=null)
-    {
-        if (is_null($scope))
-            return $this->refItem->getMethods();
-        return $this->refItem->getMethods($scope);
-    }
+
+    /**
+     * @TODO Accept at least the same options supported on phpunit.xml for valid test case names.
+     */
     public function getSections()
     {
-        $testCaseClass = $this->getName().'Test';
-
-        if (class_exists($testCaseClass)) {
-            $testCaseReflection = new ReflectionClass($testCaseClass);
-            $testCaseMethods = $testCaseReflection->getMethods();
-        } else {
-            $testCaseMethods= array();
+        $sections         = new SplObjectStorage;
+        $targetReflection = $this->getReflection();
+        $targetClassName  = $targetReflection->getName();
+        $testClassName    = $targetClassName.'Test';
+        $testCaseMethods  = array();
+        // Try to get a reflection if a test case for this class exists.
+        if (true === class_exists($testClassName)) {
+            $testCaseMethods = $this->getReflection($testClassName)->getMethods();
         }
-        $sections = new SplObjectStorage;
-        $methods = $this->getMethods(ReflectionMethod::IS_PUBLIC ^ ReflectionMethod::IS_STATIC);
-        $properties = $this->getProperties(ReflectionProperty::IS_PUBLIC ^ ReflectionProperty::IS_STATIC);
-        $staticMethods = $this->getMethods(ReflectionMethod::IS_PUBLIC & ReflectionMethod::IS_STATIC);
-        $staticProperties = $this->getProperties(ReflectionProperty::IS_PUBLIC & ReflectionProperty::IS_STATIC);
+
+        $methods          = $targetReflection->getMethods(ReflectionMethod::IS_PUBLIC ^ ReflectionMethod::IS_STATIC);
+        $properties       = $targetReflection->getProperties(ReflectionProperty::IS_PUBLIC ^ ReflectionProperty::IS_STATIC);
+        $staticMethods    = $targetReflection->getMethods(ReflectionMethod::IS_PUBLIC & ReflectionMethod::IS_STATIC);
+        $staticProperties = $targetReflection->getProperties(ReflectionProperty::IS_PUBLIC & ReflectionProperty::IS_STATIC);
 
         $nameSort = function($a, $b) {
             return strnatcasecmp($a->getName(), $b->getName());
         };
-
         usort($methods, $nameSort);
         usort($properties, $nameSort);
         usort($staticMethods, $nameSort);
@@ -76,11 +64,13 @@ class DocItem
                                  }));
         return $sections;
     }
+
     public function getClassContent()
     {
-        $sections = array();
-        $class            = $this->getName();
-        $sections[$class] = $this->getDocComment();
+        $sections         = array();
+        $targetReflection = $this->getReflection();
+        $class            = $targetReflection->getName();
+        $sections[$class] = $targetReflection->getDocComment();
         $reflectors = $this->getSections();
         foreach ($reflectors as $sub) {
             $tests = $reflectors[$sub];
