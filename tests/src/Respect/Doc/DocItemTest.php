@@ -1,6 +1,6 @@
 <?php
-namespace Respect\Doc;                               
-                                                 
+namespace Respect\Doc;
+
 class DocItemTest extends \phpunit_framework_testcase
 {
     private $docItem;
@@ -18,16 +18,18 @@ class DocItemTest extends \phpunit_framework_testcase
     }
     public function test_getDocComment()
     {
-        $returnValue = "/**
- * DocItem Reflection Class to speak where is the socks to rock it.  
- * 
- * @author Ivo Nascimento <ivo.nascimento@php.net> 
- */";
+        $returnValue = <<<PHPDOC
+/**
+ * DocItem Reflection Class to speak where is the socks to rock it.
+ *
+ * @author Ivo Nascimento <ivo.nascimento@php.net>
+ */
+PHPDOC;
         $this->AssertEquals($returnValue, $this->docItem->getDocComment());
 }
 
     public function getMethodsDataprovider()
-{    
+{
         return array(
                 array(0,'__construct'),
                 array(1,'getName'),
@@ -36,7 +38,7 @@ class DocItemTest extends \phpunit_framework_testcase
         );
     }
     /**
-     * @dataProvider getMethodsDataprovider  
+     * @dataProvider getMethodsDataprovider
      */
     public function test_getMethods($idx, $name)
     {

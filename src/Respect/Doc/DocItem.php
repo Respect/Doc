@@ -8,9 +8,9 @@ use \ReflectionProperty;
 
 
 /**
- * DocItem Reflection Class to speak where is the socks to rock it.  
- * 
- * @author Ivo Nascimento <ivo.nascimento@php.net> 
+ * DocItem Reflection Class to speak where is the socks to rock it.
+ *
+ * @author Ivo Nascimento <ivo.nascimento@php.net>
  */
 class DocItem
 {
@@ -18,8 +18,8 @@ class DocItem
     private $refItem;
 
     /**
-     * __construct Construct a doc Item 
-     * 
+     * __construct Construct a doc Item
+     *
      * @access public
      * @return void
      */
@@ -46,7 +46,7 @@ class DocItem
             return $this->refItem->getMethods();
         return $this->refItem->getMethods($scope);
     }
-    public function getSections() 
+    public function getSections()
     {
         $testCaseClass = $this->getName().'Test';
 
@@ -110,7 +110,7 @@ class DocItem
                     }
                     $name .= '('.implode(', ', $tmp).')';
                 }
-                    
+
                 $sections[$name] = $sub->getDocComment();
                 // Fetch method content for examples
                 foreach ($tests as $n => $test) {
@@ -132,7 +132,7 @@ class DocItem
                 }
 
             }
-               return $sections; 
+               return $sections;
         }
 }
 
