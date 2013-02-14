@@ -3,10 +3,11 @@
 date_default_timezone_set('UTC');
 
 $pear_path = trim(`pear config-get php_dir`);
-set_include_path('../src' 
-        . PATH_SEPARATOR . $pear_path 
+set_include_path('../src'
+        . PATH_SEPARATOR . __DIR__.DIRECTORY_SEPARATOR.'output' // ./output/
+        . PATH_SEPARATOR . $pear_path
         . PATH_SEPARATOR . get_include_path());
-
+var_dump(get_include_path());
 /**
  * Autoloader that implements the PSR-0 spec for interoperability between
  * PHP software.
