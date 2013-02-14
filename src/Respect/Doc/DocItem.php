@@ -12,6 +12,8 @@ use SplObjectStorage,
  */
 class DocItem
 {
+    const FOR_CONCRETE_CLASS = false;
+    const FOR_TEST_CLASS = true;
     private $className;
 
     /**
@@ -25,9 +27,14 @@ class DocItem
        $this->className = $whatDoYouWantToDocument;
     }
 
-    public function getReflection($className=null)
+    public function getReflection($for=self::FOR_CONCRETE_CLASS)
     {
-        $className = $className ?: $this->className;
+        $className     = $this->className;
+        $testClassName = $this->className.'Test';
+        if ($for === self::FOR_TEST_CLASS && class_exists($testClassName)) {
+            return new ReflectionClass($testClassName);
+        }
+
         return new ReflectionClass($className);
     }
 
@@ -37,13 +44,12 @@ class DocItem
     public function getSections()
     {
         $sections         = new SplObjectStorage;
-        $targetReflection = $this->getReflection();
+        $targetReflection = $this->getReflection(self::FOR_CONCRETE_CLASS);
         $targetClassName  = $targetReflection->getName();
-        $testClassName    = $targetClassName.'Test';
+        $testReflection   = $this->getReflection(self::FOR_TEST_CLASS);
         $testCaseMethods  = array();
-        // Try to get a reflection if a test case for this class exists.
-        if (true === class_exists($testClassName)) {
-            $testCaseMethods = $this->getReflection($testClassName)->getMethods();
+        if ($testReflection instanceof ReflectionClass) {
+            $testCaseMethods = $testReflection->getMethods();
         }
 
         $methods          = $targetReflection->getMethods(ReflectionMethod::IS_PUBLIC ^ ReflectionMethod::IS_STATIC);
