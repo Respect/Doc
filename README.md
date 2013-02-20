@@ -1,6 +1,6 @@
-Respect\Doc
-===========
- 
+Respect\Doc\Doc
+===============
+
 Generates docs that rocks your socks off.
 
  Why it rock your socks off:
@@ -14,18 +14,15 @@ More Info:
    - **Author:** Alexandre Gaigalas <alexandre@gaigalas.net> 
    - **Author:** Augusto Pascutti <augusto@phpsp.org.br>
 
-path
-----
-
-__construct($classOrNamespace)
-------------------------------
+__construct($classOrNamespace, $documentAs=null)
+------------------------------------------------
 
 Receives the namespace or class to be documented
 
 Example 1:
 
     $doc    = new Doc('Respect'); //Full Namespace
-    $title  = 'Respect\Doc' . PHP_EOL 
+    $title  = 'Respect\Doc\Doc' . PHP_EOL 
             . '===========';
     $this->assertStringStartsWith($title, (string) $doc);
 
@@ -33,7 +30,7 @@ Example 1:
 Example 2:
 
     $doc    = new Doc('Respect\Doc'); //Specific |class Name
-    $title  = 'Respect\Doc' . PHP_EOL 
+    $title  = 'Respect\Doc\Doc' . PHP_EOL 
             . '===========';
     $this->assertStringStartsWith($title, (string) $doc);
 
@@ -49,3 +46,43 @@ Example 1:
 	$markdown  = (string) $doc;
 	$doc       = file_put_contents('../README.md', $markdown); //Happy Panda
 	$this->assertStringEqualsFile('../README.md', $markdown);
+
+Respect\Doc\DocItem
+===================
+
+DocItem Reflection Class to speak where is the socks to rock it.
+
+More Info:
+
+   - **Author:** Ivo Nascimento <ivo.nascimento@php.net>
+
+getClassContent()
+-----------------
+
+getSections()
+-------------
+
+__call($method, $parameters)
+----------------------------
+
+__construct($item)
+------------------
+
+__construct Construct a doc Item
+
+More Info:
+
+   - **Access:** public 
+   - **Return:** void
+
+Respect\Doc\MarkDown
+====================
+
+speak Markdownish
+
+More Info:
+
+   - **Author:** Ivo Nascimento <ivonascimento@php.net>
+
+get(array , $sections)
+----------------------
