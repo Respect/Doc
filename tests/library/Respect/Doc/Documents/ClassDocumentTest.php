@@ -5,8 +5,8 @@ namespace Respect\Doc\Documents;
 /**
  * Getting Information About Tested Classes
  *
- * ClassDocument allows you to explore a test case and find out information
- * about how it works.
+ * ClassDocument allows you to explore a class and find out relevant document
+ * information about it.
  *
  * @covers Respect\Doc\Documents\ClassDocument
  */
@@ -54,9 +54,20 @@ class ClassDocumentTest extends \PHPUnit_Framework_TestCase
             'The variable $ClassDocument as string gets the test case class name'
         );
     }
+    
+    public function testGettingMethods()
+    {
+        $classDocument = new ClassDocument(new \My\Sample);
+        $methods = $classDocument->methods;
+        $methodsDoc = $methods->doc();
+        $this->assertInstanceOf("Respect\\Doc\\Documents\\Methods", $methods);
+    }
+    
 }
 
 namespace My;
 class Sample 
 {
+    public function foo() {}
+    public function bar() {}
 }

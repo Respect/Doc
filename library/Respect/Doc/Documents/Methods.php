@@ -8,7 +8,7 @@ class Methods extends AbstractDocument implements
     e\ExplorationList,
     e\MethodExploration
 {   
-    public static $considers = array();
+    public static $considers = array('/.*/');
     
     public function __construct(ClassDocument $tested)
     {
@@ -26,7 +26,7 @@ class Methods extends AbstractDocument implements
     
     public function doc()
     {
-        return $this->getIterator();
+        return iterator_to_array($this);
     }
     
     public function getIterator()
@@ -34,18 +34,15 @@ class Methods extends AbstractDocument implements
         $testedClass = $this->tested;
         $allMethods = get_class_methods($testedClass->tested);
         
-        if (!static::$considers) {
-            return $allMethods;
+        $methodsInstances = array();
+        
+        foreach ($allMethods as $method) {
+            if (empty(static::$considers) || static::considers($method)) {
+                $methodsInstances[$method] = new Method($this->tested, $method);
+            }
         }
         
-        return array_values(array_filter(array_map(
-            function ($method) use ($testedClass) {
-                if (static::considers($method)) {
-                    return $testedClass->methods[$method];
-                }
-            }, 
-            $allMethods
-        )));
+        return new \ArrayObject($methodsInstances);
     }
     
     public function offsetGet($name)

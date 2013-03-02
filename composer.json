@@ -1,5 +1,5 @@
 {
-    "name": "Respect/Doc",
+    "name": "respect/doc",
     "version": "0.1.0-alpha",
     "type": "library",
     "description": "Documentation for under engineered codes (in PHP).",
@@ -17,7 +17,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "phpunit/phpunit": "*",
+        "respect/test": "dev-master"
     },
     "autoload": {
         "psr-0": {

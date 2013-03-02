@@ -23,12 +23,13 @@ class MethodsTest extends \PHPUnit_Framework_TestCase
         
         $Methods = new Methods($testedClass);
         Methods::$considers = array($pattern);
-        $this->assertContains(
+        
+        $this->assertArrayHasKey(
             $docResult,
             $Methods->doc(),
             '$Methods->doc() should return an array with methods matching Methods::$considers'
         );
-        $this->assertEquals(
+        $this->assertContains(
             $stringResult,
             (string) $Methods,
             '$Methods->doc() should return an array with methods matching Methods::$considers'
@@ -43,6 +44,14 @@ class MethodsTest extends \PHPUnit_Framework_TestCase
             array("fooBar", "fooBar,barBaz", "/bar/i") ,
             array("barBaz", "fooBar,barBaz", "/bar/i") 
         );
+    }
+    
+    public function testGettingMethod()
+    {
+        $testedClass = new ClassDocument("My\\MethodsSampleTest");
+        $method = $testedClass->methods["barBaz"];
+        
+        $this->assertInstanceOf("Respect\\Doc\\Documents\\Method", $method);
     }
 }
 
